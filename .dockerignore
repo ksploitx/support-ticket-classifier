@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+frontend/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Data
+data/raw/*.csv
+
+# Git & env
+.git/
+.env
+.env.*
+
+# Build artifacts
+.pytest_cache/
+.next/
+dist/
+build/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store

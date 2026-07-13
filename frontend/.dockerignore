@@ -1,0 +1,11 @@
+# Dependencies (re-installed via npm ci in Docker)
+node_modules/
+
+# Build output (rebuilt in Docker)
+.next/
+
+# Env files (not needed in image)
+.env*
+
+# IDE & OS
+.DS_Store
