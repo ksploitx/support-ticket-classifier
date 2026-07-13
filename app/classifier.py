@@ -20,7 +20,7 @@ except (FileNotFoundError, OSError, EOFError, ImportError, Exception) as e:
     model = None
     labels = []
 
-def classify_ticket(text: str, confidence_threshold: float = 0.85) -> Dict[str, Any]:
+def classify_ticket(text: str, confidence_threshold: float = 0.60) -> Dict[str, Any]:
     # 1. Try classify_by_rules(text) from app.rules
     rule_category = classify_by_rules(text)
     if rule_category:
@@ -31,6 +31,12 @@ def classify_ticket(text: str, confidence_threshold: float = 0.85) -> Dict[str, 
     
     # 2. Otherwise, vectorize the text, run model.predict_proba
     X = vectorizer.transform([text])
+    
+    # Gibberish/Unknown words check: if the vector is completely empty (no known words),
+    # the model is just guessing based on class priors. Route to Others.
+    if hasattr(X, "nnz") and X.nnz == 0:
+        return {"category": "Others", "confidence": 0.0, "method": "ml_gibberish"}
+
     probabilities = model.predict_proba(X)[0]
     
     # Get the top category and its probability
