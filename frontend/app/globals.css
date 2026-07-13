@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ── Colors (from DESIGN.md) ── */
+  --color-primary: #333E50;
+  --color-on-primary: #FFFFFF;
+  --color-primary-container: #4A5568;
+  --color-on-primary-container: #BECAE0;
+  --color-secondary: #505F76;
+  --color-on-secondary: #FFFFFF;
+  --color-secondary-container: #D0E1FB;
+
+  --color-surface: #FBF8FA;
+  --color-surface-dim: #DCD9DB;
+  --color-surface-bright: #FBF8FA;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F5F3F4;
+  --color-surface-container: #F0EDEF;
+  --color-surface-container-high: #EAE7E9;
+  --color-surface-container-highest: #E4E2E3;
+
+  --color-on-surface: #1B1B1D;
+  --color-on-surface-variant: #44474C;
+  --color-outline: #75777D;
+  --color-outline-variant: #C5C6CD;
+
+  --color-error: #BA1A1A;
+  --color-on-error: #FFFFFF;
+  --color-error-container: #FFDAD6;
+
+  --color-background: #FBF8FA;
+  --color-on-background: #1B1B1D;
+
+  /* Elevation borders & input-specific */
+  --color-elevation-border: #E2E8F0;
+  --color-input-border: #E2E8F0;
+  --color-input-focus-ring: rgba(74, 85, 104, 0.2);
+
+  /* Category pill tints */
+  --color-cat-login-bg: #E8DEF8;
+  --color-cat-login-text: #4A148C;
+  --color-cat-payment-bg: #DCFCE7;
+  --color-cat-payment-text: #166534;
+  --color-cat-account-bg: #DBEAFE;
+  --color-cat-account-text: #1E40AF;
+  --color-cat-delivery-bg: #FEF3C7;
+  --color-cat-delivery-text: #92400E;
+  --color-cat-technical-bg: #FFE4E6;
+  --color-cat-technical-text: #9F1239;
+  --color-cat-others-bg: #F3F4F6;
+  --color-cat-others-text: #374151;
+
+  /* ── Typography (Inter) ── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Border Radius (from DESIGN.md) ── */
+  --radius-sm: 0.25rem;
+  --radius-DEFAULT: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ── Elevation Shadows ── */
+  --shadow-elevation-1: 0px 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-elevation-2: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+}
