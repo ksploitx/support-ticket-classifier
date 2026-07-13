@@ -12,35 +12,37 @@ from typing import Dict, List, Optional
 # ---------------------------------------------------------------------------
 
 CATEGORY_KEYWORDS: Dict[str, List[str]] = {
-    "Billing and Payments": [
+    "Payment": [
         "invoice", "billing", "payment", "refund", "charge", "charged",
         "credit card", "debit card", "receipt", "subscription",
         "overcharged", "transaction", "pricing", "price",
         "pay", "paid", "outstanding balance", "due date",
     ],
-    "Technical Support": [
+    "Technical Issue": [
         "error", "bug", "crash", "not working", "broken", "glitch",
         "exception", "traceback", "stack trace", "slow", "latency",
         "timeout", "freeze", "unresponsive", "compatibility",
-        "driver", "firmware", "update failed",
+        "driver", "firmware", "update failed", "outage", "downtime", 
+        "maintenance", "offline", "unavailable", "system down", 
+        "service disruption", "status page", "scheduled maintenance", 
+        "degraded", "incident",
     ],
-    "Account and Access": [
-        "password", "login", "sign in", "locked out", "reset",
-        "two factor", "2fa", "mfa", "credentials", "username",
-        "account", "permission", "access denied", "sso",
-        "authentication", "authorization", "vpn",
+    "Login Issue": [
+        "password", "login", "log in", "sign in", "signin", "locked out", "locked", "is locked", "reset",
+        "two factor", "2fa", "mfa", "credentials", "username", "otp",
+        "access denied", "sso", "authentication", "authenticate", "can't access my account",
+        "reset my password"
     ],
-    "Returns and Exchanges": [
+    "Account": [
+        "account", "permission", "authorization", "vpn",
+    ],
+    "Delivery": [
         "return", "exchange", "refund", "damaged", "defective",
         "wrong item", "replacement", "rma", "warranty",
         "shipping back", "return label", "send back",
+        "shipping", "delivery", "track", "package"
     ],
-    "Outage and Maintenance": [
-        "outage", "downtime", "maintenance", "offline", "unavailable",
-        "system down", "service disruption", "status page",
-        "scheduled maintenance", "degraded", "incident",
-    ],
-    "Sales and Pre-Sales": [
+    "Others": [
         "demo", "trial", "purchase", "buying", "quote",
         "discount", "coupon", "promo", "sales team",
         "interested in", "proposal", "upgrade plan",
@@ -105,22 +107,22 @@ def classify_by_rules(text: str) -> Optional[str]:
 # ---------------------------------------------------------------------------
 #
 # >>> classify_by_rules("I was charged twice on my credit card for the subscription")
-# 'Billing and Payments'
+# 'Payment'
 #
 # >>> classify_by_rules("The display on my monitor is flickering after the firmware update")
-# 'Technical Support'          # "display" does NOT trigger "pay" match
+# 'Technical Issue'          # "display" does NOT trigger "pay" match
 #
-# >>> classify_by_rules("I can't login, my account is locked out after too many attempts")
-# 'Account and Access'
+# >>> classify_by_rules("My account is locked")
+# 'Login Issue'
 #
 # >>> classify_by_rules("I received a damaged item and need a replacement")
-# 'Returns and Exchanges'
+# 'Delivery'
 #
 # >>> classify_by_rules("Your service is down and the status page shows a major outage")
-# 'Outage and Maintenance'
+# 'Technical Issue'
 #
 # >>> classify_by_rules("Hello, I just have a random question about the weather")
 # None                         # No strong match → defer to ML
 #
 # >>> classify_by_rules("I need my password and also a refund")
-# None                         # Tie between Account/Access and Billing (score 1 each) → defer to ML
+# None                         # Tie between Login Issue and Payment (score 1 each) → defer to ML
