@@ -20,7 +20,19 @@ def main():
     
     # Rename 'queue' to 'category' for the model
     print("Mapping labels...")
-    df['category'] = df['queue']
+    queue_mapping = {
+        'Billing and Payments': 'Payment',
+        'Customer Service': 'Account',
+        'General Inquiry': 'Others',
+        'Human Resources': 'Others',
+        'IT Support': 'Login Issue',
+        'Product Support': 'Technical Issue',
+        'Returns and Exchanges': 'Delivery',
+        'Sales and Pre-Sales': 'Account',
+        'Service Outages and Maintenance': 'Technical Issue',
+        'Technical Support': 'Technical Issue'
+    }
+    df['category'] = df['queue'].map(queue_mapping)
     
     # Keep only the columns we need and drop any empty rows
     processed_df = df[['text', 'category']].dropna()
