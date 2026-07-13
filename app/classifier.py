@@ -20,7 +20,7 @@ except (FileNotFoundError, OSError, EOFError, ImportError, Exception) as e:
     model = None
     labels = []
 
-def classify_ticket(text: str, confidence_threshold: float = 0.6) -> Dict[str, Any]:
+def classify_ticket(text: str, confidence_threshold: float = 0.85) -> Dict[str, Any]:
     # 1. Try classify_by_rules(text) from app.rules
     rule_category = classify_by_rules(text)
     if rule_category:

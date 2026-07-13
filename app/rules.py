@@ -23,7 +23,7 @@ CATEGORY_KEYWORDS: Dict[str, List[str]] = {
         "exception", "traceback", "stack trace", "slow", "latency",
         "timeout", "freeze", "unresponsive", "compatibility",
         "driver", "firmware", "update failed", "outage", "downtime", 
-        "maintenance", "offline", "unavailable", "system down", 
+        "maintenance", "offline", "unavailable", "system down", "system is down",
         "service disruption", "status page", "scheduled maintenance", 
         "degraded", "incident",
     ],
@@ -40,7 +40,9 @@ CATEGORY_KEYWORDS: Dict[str, List[str]] = {
         "return", "exchange", "refund", "damaged", "defective",
         "wrong item", "replacement", "rma", "warranty",
         "shipping back", "return label", "send back",
-        "shipping", "delivery", "track", "package"
+        "shipping", "delivery", "track", "package",
+        "hasn't arrived", "has not arrived", "order hasn't", "my order",
+        "shipment", "tracking number", "not delivered", "delivery delay"
     ],
     "Others": [
         "demo", "trial", "purchase", "buying", "quote",
