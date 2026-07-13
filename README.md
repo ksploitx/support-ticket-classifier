@@ -101,6 +101,28 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 ## Running the Application
 
+### Initial Setup (Required Before Launch)
+
+Since the trained model files (`.pkl`) are ignored in Git, you **must** train the model locally before running the application (whether via Docker or manually).
+
+1. **Download the dataset:** Download the CSV file from [Kaggle: Multilingual Customer Support Tickets](https://www.kaggle.com/datasets/tobiasbueck/multilingual-customer-support-tickets?resource=download).
+2. **Place the dataset:** Extract and rename the downloaded file (if necessary), then place it in the following directory:
+   `data/raw/Ticket Dataset Multi-Lang.csv`
+3. **Set up a virtual environment & install dependencies:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+4. **Prepare the data and train the model:**
+   ```bash
+   python scripts/prepare_dataset.py
+   python scripts/train_model.py
+   ```
+   *This will generate `vectorizer.pkl`, `model.pkl`, and `labels.json` inside the `models/` directory.*
+
+---
+
 ### Option A — Docker Compose _(recommended)_
 
 Runs the backend API **and** the Next.js frontend together in one command. Requires Docker and Docker Compose.
@@ -123,34 +145,11 @@ Runs the backend API **and** the Next.js frontend together in one command. Requi
 
 ### Option B — Manual (venv)
 
-Follow these steps to train the model and start the API directly on your host machine.
+Follow these steps to start the API directly on your host machine (assuming you have already completed the **Initial Setup** above).
 
-#### 1. Create a Virtual Environment and Install Dependencies
+#### 1. Run the FastAPI Server (Backend)
 
-```bash
-# Create a virtual environment
-python -m venv venv
-
-# Activate the virtual environment
-# On macOS/Linux:
-source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
-
-# Install requirements
-pip install -r requirements.txt
-```
-
-#### 2. Train the ML Model
-
-Before running the API, you need to generate the model artifacts (`model.pkl`, `vectorizer.pkl`, `labels.json`).
-
-```bash
-python scripts/prepare_dataset.py
-python scripts/train_model.py
-```
-
-#### 3. Run the FastAPI Server
+Ensure your virtual environment is activated, then start the server:
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -158,7 +157,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 The API will be available at `http://localhost:8000`. Interactive documentation at `http://localhost:8000/docs`.
 
-#### 4. Run the Next.js Frontend (optional)
+#### 2. Run the Next.js Frontend (optional)
 
 ```bash
 cd frontend
