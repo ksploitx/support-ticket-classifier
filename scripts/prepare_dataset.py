@@ -25,14 +25,23 @@ def main():
         'Customer Service': 'Account',
         'General Inquiry': 'Others',
         'Human Resources': 'Others',
-        'IT Support': 'Login Issue',
         'Product Support': 'Technical Issue',
         'Returns and Exchanges': 'Delivery',
-        'Sales and Pre-Sales': 'Account',
-        'Service Outages and Maintenance': 'Technical Issue',
-        'Technical Support': 'Technical Issue'
+        'Sales and Pre-Sales': 'Others',
+        'Service Outages and Maintenance': 'Technical Issue'
     }
-    df['category'] = df['queue'].map(queue_mapping)
+    
+    def map_category(row):
+        q = row['queue']
+        text = str(row['text']).lower()
+        if q in ['IT Support', 'Technical Support']:
+            login_keywords = ['login', 'log in', 'password', 'otp', 'sign in', 'signin', 'authenticate', 'authentication', 'locked out', 'access denied', "can't access my account", 'reset my password']
+            if any(kw in text for kw in login_keywords):
+                return 'Login Issue'
+            return 'Technical Issue'
+        return queue_mapping.get(q, 'Others')
+        
+    df['category'] = df.apply(map_category, axis=1)
     
     # Keep only the columns we need and drop any empty rows
     processed_df = df[['text', 'category']].dropna()

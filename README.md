@@ -70,6 +70,10 @@ docker build -t support-ticket-classifier .
 docker run -p 8000:8000 --env-file .env support-ticket-classifier
 ```
 
+## Known Limitations & Ambiguity
+
+There is a documented ambiguity ceiling in the dataset regarding ticket categories, particularly between `Technical Issue` and `Account`. Many tickets contain symptoms or descriptions that straddle both categories (e.g., VPN issues or database syncs labelled as "Account"). Rather than over-tuning the model for minor accuracy gains, we use `LinearSVC` with balanced class weights as our best generalisation baseline and acknowledge the noisy ground truth.
+
 ## Tech Stack
 
 - **API**: FastAPI + Uvicorn

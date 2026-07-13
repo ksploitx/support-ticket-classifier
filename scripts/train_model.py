@@ -4,6 +4,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import LinearSVC
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
 import joblib
 
@@ -40,9 +43,10 @@ def main():
     X_train_vec = vectorizer.fit_transform(X_train)
     X_test_vec = vectorizer.transform(X_test)
 
-    # 4. LogisticRegression
+    # 4. LinearSVC wrapped in CalibratedClassifierCV
     print("Training model...")
-    model = LogisticRegression(class_weight='balanced', max_iter=1000)
+    base_model = LinearSVC(class_weight='balanced', max_iter=10000, random_state=42)
+    model = CalibratedClassifierCV(estimator=base_model, method='sigmoid', cv=5)
     
     # 5. Fit, print classification_report and confusion matrix
     model.fit(X_train_vec, y_train)
@@ -54,7 +58,9 @@ def main():
     print(classification_report(y_test, y_pred))
     
     print("--- Confusion Matrix ---")
-    print(confusion_matrix(y_test, y_pred))
+    cm = confusion_matrix(y_test, y_pred)
+    cm_df = pd.DataFrame(cm, index=[f"True {c}" for c in model.classes_], columns=[f"Pred {c}" for c in model.classes_])
+    print(cm_df.to_string())
     
     # Final metrics
     acc = accuracy_score(y_test, y_pred)
