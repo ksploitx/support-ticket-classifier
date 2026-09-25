@@ -48,3 +48,6 @@ AGENTS.md
 # Data and Models
 data/processed/
 models/*.pkl
+
+# Others
+docs/Stitch Ticketsense Support Classifier.zip
